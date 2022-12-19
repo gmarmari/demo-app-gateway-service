@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  service-registry:
+    build: .
+    image: "demo-app-gateway-service"
+    container_name: demo-app-gateway-service
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://demo-app-service-registry:8761/eureka
+    networks:
+      - default
+      - demo-app-network
+    volumes:
+      - "./log:/app/log"
+    ports:
+      - "8080:8080"
+
+networks:
+  demo-app-network:
+    external: true
+
+
