@@ -7,6 +7,15 @@ services:
     container_name: demo-app-gateway-service
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://demo-app-service-registry:8761/eureka
+      SPRING_CLOUD_GATEWAY_ROUTES[0]_ID: orders
+      SPRING_CLOUD_GATEWAY_ROUTES[0]_URI: http://demo-app-orders:8001
+      SPRING_CLOUD_GATEWAY_ROUTES[0]_PREDICATES[0]: Path= /orders/**
+      SPRING_CLOUD_GATEWAY_ROUTES[1]_ID: products
+      SPRING_CLOUD_GATEWAY_ROUTES[1]_URI: http://demo-app-products:8002
+      SPRING_CLOUD_GATEWAY_ROUTES[1]_PREDICATES[0]: Path= /products/**
+      SPRING_CLOUD_GATEWAY_ROUTES[2]_ID: profile
+      SPRING_CLOUD_GATEWAY_ROUTES[2]_URI: http://demo-app-profile:8003
+      SPRING_CLOUD_GATEWAY_ROUTES[2]_PREDICATES[0]: Path= /profile/**
     networks:
       - default
       - demo-app-network
