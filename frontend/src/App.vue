@@ -1,26 +1,36 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <ul>
+      <the-header title="Spring Cloud Demo App"></the-header>
+      <the-menu></the-menu>
+  </ul>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import TheHeader from './components/TheHeader.vue';
+import TheMenu from './components/TheMenu.vue';
+
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    TheHeader,
+    TheMenu
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+* {
+  box-sizing: border-box;
 }
+
+html {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
 </style>
