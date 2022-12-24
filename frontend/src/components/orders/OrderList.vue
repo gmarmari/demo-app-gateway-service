@@ -10,13 +10,7 @@
         </order-basic-info>
     </ul>
     <p class="center" v-if="orders.length === 0">No Orders</p>
-    <teleport to="body">
-            <error-alert v-if="error !== null">
-                <h2>Error!</h2>
-                <p>Error occurred: {{ error.message }}</p>
-                <button @click="closeErrorAlert">OK</button>
-            </error-alert>
-        </teleport>
+    <alert-dialog v-if="error != null" :title="'An error occured'" :message="error.message" @onCloseAlertDialog="closeErrorAlert"></alert-dialog>
 </template>
 
 

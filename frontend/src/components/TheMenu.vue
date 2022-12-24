@@ -4,7 +4,7 @@
         :mode="ordersButtonMode">Orders</base-button>
         <base-button @click="setSelectedTab('product-list')"
         :mode="productsButtonMode">Products</base-button>
-        <base-button @click="setSelectedTab('user-profile')"
+        <base-button @click="setSelectedTab('profile-details')"
         :mode="profileButtonMode">Profile</base-button>
     </base-card>
     <component :is="selectedTab"></component>
@@ -15,12 +15,14 @@
 
 import ProductList from './products/ProductList.vue';
 import OrderList from './orders/OrderList.vue';
+import ProfileDetails from './profile/ProfileDetails.vue';
 
 export default {
 
     components : {
         ProductList,
-        OrderList
+        OrderList,
+        ProfileDetails
     },
 
 
@@ -42,7 +44,7 @@ export default {
         },
 
         profileButtonMode() {
-            return this.selectedTab === 'user-profile' ? null : 'flat';
+            return this.selectedTab === 'profile-details' ? null : 'flat';
         }
     },
 

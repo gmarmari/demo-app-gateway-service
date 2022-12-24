@@ -4,14 +4,12 @@ import App from './App.vue'
 
 import BaseCard from './components/UI/BaseCard.vue';
 import BaseButton from './components/UI/BaseButton.vue';
-import BaseDialog from './components/UI/BaseDialog.vue';
-import ErrorAlert from "./components/UI/ErrorAlert.vue";
+import AlertDialog from "./components/UI/AlertDialog.vue";
 
 const app = createApp(App);
 
 app.component('base-card', BaseCard);
 app.component('base-button', BaseButton);
-app.component('base-dialog', BaseDialog);
-app.component('error-alert', ErrorAlert);
+app.component('alert-dialog', AlertDialog);
 
 app.mount('#app')
