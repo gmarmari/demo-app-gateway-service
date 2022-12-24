@@ -1,0 +1,73 @@
+<template>
+    <li>
+      <base-card>
+        <header>
+          <h3>{{ address.name }}</h3>
+        </header>
+        <p>{{ combineStreetPostalCodeAndCity }}</p>
+        <p v-if="address.state !== null || address.country !== null">{{ combineStateAndCountry }}</p>
+        <p>{{ address.type }}</p>
+        <footer>
+            <base-button @click="$emit('editAddress(address)')">Edit</base-button>
+            <base-button @click="$emit('deleteAddress(address)')">Delete</base-button>
+        </footer>
+      </base-card>
+    </li>
+</template>
+
+
+<script>
+export default {
+
+  props: ['address'],
+
+  emits: ['editAddress', 'deleteAddress'],
+
+  computed: {
+
+    combineStreetPostalCodeAndCity() {
+        return this.address.street + " " + this.address.postalCode + " " + this.address.city;
+    },
+
+    combineStateAndCountry() {
+        var text = "";
+        if (this.address.state != null) {
+            text += this.address.state;
+            text += " ";
+        }
+        if (this.address.country != null) {
+            text += this.address.country;
+        }
+        return text;
+    }
+
+  }
+
+}
+</script>
+
+<style scoped>
+li {
+  margin: auto;
+  max-width: 40rem;
+}
+
+header,
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+h3 {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+}
+
+p {
+  margin: 0.5rem 0;
+}
+
+</style>
+

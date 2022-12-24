@@ -22,12 +22,14 @@
 <script>
 
 import PersonalData from './PersonalData.vue';
+import AddressList from './AddressList.vue';
 
 
 export default {
 
     components: {
-        PersonalData
+        PersonalData,
+        AddressList
     },
 
 
