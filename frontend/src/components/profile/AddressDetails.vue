@@ -8,8 +8,8 @@
         <p v-if="address.state !== null || address.country !== null">{{ combineStateAndCountry }}</p>
         <p>{{ address.type }}</p>
         <footer>
-            <base-button @click="$emit('editAddress(address)')">Edit</base-button>
-            <base-button @click="$emit('deleteAddress(address)')">Delete</base-button>
+            <base-button @click="emitEditAddress">Edit</base-button>
+            <base-button @click="emitDeleteAddress">Delete</base-button>
         </footer>
       </base-card>
     </li>
@@ -41,6 +41,18 @@ export default {
         return text;
     }
 
+  }, 
+
+  methods: {
+
+
+    emitEditAddress() {
+      this.$emit('editAddress', this.address);
+    },
+
+    emitDeleteAddress() {
+      this.$emit('deleteAddress', this.address);
+    }
   }
 
 }
