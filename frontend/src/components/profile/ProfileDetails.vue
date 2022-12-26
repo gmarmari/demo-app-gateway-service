@@ -23,13 +23,15 @@
 
 import PersonalData from './PersonalData.vue';
 import AddressList from './AddressList.vue';
+import PaymentMethodList from './PaymentMethodList.vue';
 
 
 export default {
 
     components: {
         PersonalData,
-        AddressList
+        AddressList,
+        PaymentMethodList
     },
 
 
