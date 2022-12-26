@@ -18,6 +18,9 @@
 
     <alert-dialog v-if="saveFinished" :title="'OK'" :message="'Address was saved!'"
         @onCloseAlertDialog="closeSaveAlert"></alert-dialog>
+
+        <alert-dialog v-if="deleteFinished" :title="'OK'" :message="'Address was deleted!'"
+        @onCloseAlertDialog="closeDeleteAlert"></alert-dialog>
 </template>
 
 
@@ -38,6 +41,7 @@ export default {
             error: null,
             editMode: false,
             saveFinished: false,
+            deleteFinished: false,
 
             address: {
                 id: 0,
@@ -95,8 +99,6 @@ export default {
 
 
         saveAddress(address) {
-
-            console.log("SAVE ADDRESS");
             this.error = null;
             this.saveFinished = false;
             fetch('/profile/addresses', {
@@ -112,19 +114,36 @@ export default {
                         this.editMode = false;
                         this.loadAddresses();
                     } else {
-                        throw new Error('Could not save data!');
+                        throw new Error('Could not save address. Response: ' + response.status + ". Note: only one address for every type is allowed!" );
                     }
                 })
                 .catch((error) => {
-                    this.error = error.message;
+                    this.error = error;
                 });
         },
 
 
         deleteAddress(address) {
-            if (address != null) {
-                // TODO
-            }
+            this.error = null;
+            this.deleteFinished = false;
+            fetch('/profile/addresses/' + address.id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(address),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        this.deleteFinished = true;
+                        this.loadAddresses();
+                    } else {
+                        throw new Error('Could not delete address!');
+                    }
+                })
+                .catch((error) => {
+                    this.error = error;
+                });
         },
 
 
@@ -134,6 +153,10 @@ export default {
 
         closeSaveAlert() {
             this.saveFinished = false;
+        },
+
+        closeDeleteAlert() {
+            this.deleteFinished = false;
         }
 
     },
