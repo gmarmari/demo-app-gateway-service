@@ -185,7 +185,7 @@ export default {
         },
 
         isDescriptionValid() {
-            return this.mDetails.info.description.length <= 1000;
+            return this.mDetails.info.description == null || this.mDetails.info.description.length <= 1000;
         },
 
         validateDescription() {
