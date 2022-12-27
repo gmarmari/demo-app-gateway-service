@@ -221,7 +221,7 @@ export default {
         },
 
         isTelValid() {
-            return this.mDetails.contact.tel.length <= 100;
+            return this.mDetails.contact.tel == null || this.mDetails.contact.tel.length <= 100;
         },
 
         validateTel() {
@@ -233,7 +233,7 @@ export default {
         },
 
         isEmailValid() {
-            return this.mDetails.contact.email.length <= 100;
+            return this.mDetails.contact.email == null || this.mDetails.contact.email.length <= 100;
         },
 
         validateEmail() {
@@ -245,7 +245,7 @@ export default {
         },
 
         isWebsiteValid() {
-            return this.mDetails.contact.website.length <= 100;
+            return this.mDetails.contact.website == null || this.mDetails.contact.website.length <= 100;
         },
 
         validateWebsite() {
