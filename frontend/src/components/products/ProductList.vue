@@ -43,7 +43,6 @@ export default {
 
     methods: {
         loadProducts() {
-            this.showAlert = false;
             fetch('/products')
                 .then((response) => {
                     if (response.ok) {
@@ -95,7 +94,7 @@ export default {
                 .then((response) => {
                     if (response.ok) {
                         this.showAlert = true;
-                        this.allertMessage = 'Success';
+                        this.allertTitle = 'Success';
                         this.allertMessage = 'Product was saved';
                         this.mode = 'LIST';
                         this.loadProducts();
