@@ -1,7 +1,7 @@
 # demo-app-gateway-service
 Just a demo project.
 * The gateway service of my demo spring application.
-* The UI of the demo sping application written with vue.js. 
+* The UI of the demo spring application written with vue.js. 
 
  # Java
  It requires Java version 17
