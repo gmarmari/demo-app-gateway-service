@@ -1,11 +1,11 @@
 <template>
-    <li>
+    <li @click="emitOnSelectProduct">
       <base-card>
         <header>
-          <h3>{{ name }}</h3>
-          <p>#{{ id }}</p>
+          <h3>{{ product.name }}</h3>
+          <p>#{{ product.id }}</p>
         </header>
-        <p>{{ prize.amount }} {{ prize.unit }}</p>
+        <p>{{ product.prize.amount }} {{ product.prize.unit }}</p>
       </base-card>
     </li>
 </template>
@@ -14,7 +14,17 @@
 <script>
 export default {
 
-  props: ['id', 'name', 'prize']
+  props: ['product'],
+
+  emits: ['onSelectProduct'],
+
+  methods: {
+
+    emitOnSelectProduct() {
+      this.$emit('onSelectProduct', this.product);
+    }
+
+  }
 
 
 }
@@ -24,6 +34,7 @@ export default {
 li {
   margin: auto;
   max-width: 40rem;
+  cursor: pointer;
 }
 
 header {
