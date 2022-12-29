@@ -29,9 +29,6 @@
         <p v-if="a.state != null">{{ a.state }} {{ a.country }}</p>
         <p v-else>{{ a.country }}</p>
         <p v-if="a.tel != null">Tel: {{ a.tel }}</p>
-        <p v-if="a.email != null">E-mail: {{ a.email }}</p>
-        <p v-if="a.website != null">Website: {{ a.website }}</p>
-
     </base-card>
 
     <footer>

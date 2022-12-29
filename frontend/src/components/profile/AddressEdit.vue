@@ -161,7 +161,7 @@ export default {
         },
 
         isTelValid() {
-            return this.mAddress.tel.length > 0 && this.mAddress.tel.length <= 100;
+            return this.mAddress.tel.length > 0 && this.mAddress.tel.length <= 32;
         },
 
         validateTel() {
