@@ -41,7 +41,7 @@
     <header>
         <h2>Products</h2>
     </header>
-    <order-product v-for="o in orderProducts" :key="o.productId" :productId="o.productId" :amount="o.amount">
+    <order-product v-for="p in details.products" :key="p.productId" :productId="p.productId" :amount="p.amount">
     </order-product>
 
     <footer>
@@ -62,12 +62,6 @@ export default {
     props: ['details'],
 
     emits: ['onEditOrder', 'onDeleteOrder'],
-
-    data() {
-        return {
-            orderProducts: []
-        }
-    },
 
     computed: {
 
@@ -93,24 +87,9 @@ export default {
             if (this.allowDelete) {
                 this.$emit('onDeleteOrder', this.details);
             }
-        },
-
-        loadOrderProducts() {
-            fetch('/orders/' + this.details.order.id + '/products')
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json();
-                    }
-                })
-                .then((data) => {
-                    this.orderProducts = data;
-                });
         }
-    },
 
-    mounted() {
-        this.loadOrderProducts();
-    }
+    },
 
 }
 </script>
