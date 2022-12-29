@@ -1,6 +1,7 @@
 <template>
     <order-details v-if="mode == 'DETAILS'" :details="orderDetails" @onEditOrder="editOrder" @onDeleteOrder="deleteOrder"></order-details>
     <div v-else>
+        <base-button @click="addOrder()">Add</base-button>
         <ul>
             <order-basic-info v-for="o in orders" :key="o.id" :order="o" @onSelectOrder="showOrderDetails">
             </order-basic-info>
@@ -91,6 +92,10 @@ export default {
             }
         },
 
+        addOrder() {
+            // TODO:
+        },
+
         closeAlert() {
             this.showAlert = false;
         }
@@ -107,6 +112,11 @@ export default {
 </script>
 
 <style scoped>
+div {
+    margin: auto;
+    max-width: 40rem;
+}
+
 ul {
     list-style: none;
     margin: 0;
