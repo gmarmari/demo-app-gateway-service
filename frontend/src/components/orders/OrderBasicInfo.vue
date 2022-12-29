@@ -1,13 +1,13 @@
 <template>
-    <li>
+    <li @click="emitOnSelectOrder">
       <base-card>
         <header class="flexSpaceBetween">
-          <h3>{{ name }}</h3>
-          <p>{{ creationDate }}</p>
+          <h3>{{ order.name }}</h3>
+          <p>{{ order.creationDate }}</p>
         </header>
         <div class="flexSpaceBetween">
-          <p>{{ prize.amount }} {{ prize.unit }}</p>
-          <p>{{ status }}</p>
+          <p>{{ order.prize.amount }} {{ order.prize.unit }}</p>
+          <p>{{ order.status }}</p>
         </div>
       </base-card>
     </li>
@@ -16,7 +16,17 @@
 <script>
 export default {
 
-  props: ['id', 'name', 'creationDate', 'prize', 'status']
+  props: ['order'],
+
+  emits: ['onSelectOrder'],
+
+  methods: {
+
+    emitOnSelectOrder() {
+      this.$emit('onSelectOrder', this.order);
+    }
+
+  }
 
 
 }
@@ -27,6 +37,7 @@ export default {
 li {
   margin: auto;
   max-width: 40rem;
+  cursor: pointer;
 }
 
 .flexSpaceBetween {

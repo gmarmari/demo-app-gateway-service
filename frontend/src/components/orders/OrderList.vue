@@ -1,39 +1,45 @@
 <template>
-    <ul>
-        <order-basic-info v-for="o in orders" 
-        :key="o.id" 
-        :id="o.id" 
-        :name="o.name" 
-        :creationDate="o.creationDate" 
-        :prize="o.prize"
-        :status="o.status">
-        </order-basic-info>
-    </ul>
-    <p class="center" v-if="orders.length === 0">No Orders</p>
-    <alert-dialog v-if="error != null" :title="'An error occured'" :message="error.message" @onCloseAlertDialog="closeErrorAlert"></alert-dialog>
+    <order-details v-if="mode == 'DETAILS'" :details="orderDetails" @onEditOrder="editOrder" @onDeleteOrder="deleteOrder"></order-details>
+    <div v-else>
+        <ul>
+            <order-basic-info v-for="o in orders" :key="o.id" :order="o" @onSelectOrder="showOrderDetails">
+            </order-basic-info>
+        </ul>
+        <p class="center" v-if="orders.length === 0">No Orders</p>
+    </div>
+    <alert-dialog v-if="showAlert" :title="allertTitle" :message="allertMessage"
+        @onCloseAlertDialog="closeAlert"></alert-dialog>
 </template>
 
 
 <script>
 import OrderBasicInfo from './OrderBasicInfo.vue';
+import OrderDetails from './OrderDetails.vue';
 
 export default {
 
     components: {
-        OrderBasicInfo
+        OrderBasicInfo,
+        OrderDetails
     },
 
     data() {
         return {
             orders: [],
-            error: null
+            orderDetails: null,
+
+            showAlert: false,
+            allertTitle: 'An error occured',
+            allertMessage: '',
+
+            mode: 'LIST'
         }
     },
 
     methods: {
         loadOrders() {
 
-            this.error = null;
+            this.showAlert = false;
             fetch('/orders')
                 .then((response) => {
                     if (response.ok) {
@@ -46,13 +52,47 @@ export default {
                     this.orders = data;
                 })
                 .catch((error) => {
-                    this.error = error;
+                    this.showAlert = true;
+                    this.allertTitle = 'An error occured';
+                    this.allertMessage = error.message;
                 });
         },
 
+        showOrderDetails(order) {
+            this.showAlert = false;
+            fetch('/orders/' + order.id + "/details")
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error("Error with code: " + response.status + " , " + response.statusText);
+                    }
+                })
+                .then((data) => {
+                    this.orderDetails = data;
+                    this.mode = 'DETAILS';
+                })
+                .catch((error) => {
+                    this.showAlert = true;
+                    this.allertTitle = 'An error occured';
+                    this.allertMessage = error.message;
+                });
+        },
 
-        closeErrorAlert() {
-            this.error = null;
+        editOrder(details) {
+            if (details != null) {
+                // TODO:
+            }
+        },
+
+        deleteOrder(details) {
+            if (details != null) {
+                // TODO:
+            }
+        },
+
+        closeAlert() {
+            this.showAlert = false;
         }
 
     },
@@ -76,9 +116,8 @@ ul {
 }
 
 p.center {
-  max-width: 40rem;
-  margin: auto;
-  text-align: center;
+    max-width: 40rem;
+    margin: auto;
+    text-align: center;
 }
-
 </style>
