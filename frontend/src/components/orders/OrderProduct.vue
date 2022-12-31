@@ -6,16 +6,25 @@
         <header>
             <h3>{{ product.name }}</h3>
         </header>
-        <p>Amount: {{ amount }}</p>
+        <div v-if="editMode" class="form-control form-control-custom" :class="{ invalid: !isAmountValid }">
+            <label for="amount">Amount</label>
+            <input id="amount" name="amount" type="number" step="1" v-model.trim="mAmount" @blur="amountChanged" />
+            <base-button mode="flat" @click="emitOnDeleteProduct">Delete</base-button>
+            <p v-if="!isAmountValid">Please enter a valid amount!</p>
+        </div>
+        <p v-else>Amount: {{ mAmount }}</p>
         <p>Prize: {{ totalPrize }} {{ product.prize.unit }}</p>
     </base-card>
 </template>
 
 
 <script>
+
 export default {
 
-    props: ['productId', 'amount'],
+    props: ['productId', 'amount', 'editMode'],
+
+    emits: ['onProductLoaded', 'onAmountChange', 'onDeleteProduct'],
 
     data() {
         return {
@@ -28,6 +37,8 @@ export default {
                 }
             },
 
+            mAmount: this.amount,
+
             isLoading: false
         }
     },
@@ -35,7 +46,11 @@ export default {
     computed: {
 
         totalPrize() {
-            return this.product.prize.amount * this.amount;
+            return this.product.prize.amount * this.mAmount;
+        },
+
+        isAmountValid() {
+            return this.mAmount > 0;
         }
 
     },
@@ -43,8 +58,14 @@ export default {
 
     methods: {
 
-        emitOnSelectProduct() {
-            this.$emit('onSelectProduct', this.product);
+        amountChanged() {
+            if (this.isAmountValid) {
+                this.$emit('onAmountChange', this.product, this.mAmount);
+            }
+        },
+
+        emitOnDeleteProduct() {
+            this.$emit('onDeleteProduct', this.product);
         },
 
         loadProduct() {
@@ -58,6 +79,7 @@ export default {
                 .then((data) => {
                     this.isLoading = false;
                     this.product = data;
+                    this.$emit('onProductLoaded', this.product);
                 });
         }
 
@@ -72,20 +94,22 @@ export default {
 </script>
 
 <style scoped>
-
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-h3 {
-    font-size: 1.25rem;
-    margin: 0.5rem 0;
+.form-control-custom>input {
+    display: initial !important;
+    width: auto !important;
+    margin-top: 0 !important;
+    margin-right: 0.5rem;
 }
 
-p {
-    margin: 0.5rem 0;
+.form-control-custom>label {
+    font-weight: bold;
+    margin-right: 0.5rem;
 }
 </style>
 

@@ -26,7 +26,7 @@
         <div class="form-control" :class="{ invalid: sizeValidity === 'invalid' }">
             <label for="size">Size</label>
             <input id="size" name="size" type="number" step="1" v-model.trim="mDetails.info.size.amount"
-                @blur="validateSie" />
+                @blur="validateSize" />
             <p v-if="sizeValidity === 'invalid'">Please enter a valid size!</p>
         </div>
 

@@ -43,14 +43,5 @@ header {
   align-items: center;
 }
 
-h3 {
-  font-size: 1.25rem;
-  margin: 0.5rem 0;
-}
-
-p {
-  margin: 0.5rem 0;
-}
-
 </style>
 

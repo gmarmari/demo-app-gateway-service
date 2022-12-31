@@ -1,5 +1,7 @@
 <template>
-    <order-details v-if="mode == 'DETAILS'" :details="orderDetails" @onEditOrder="editOrder" @onDeleteOrder="deleteOrder"></order-details>
+    <order-details v-if="mode === 'DETAILS'" :details="orderDetails" @onEditOrder="editOrder"
+        @onDeleteOrder="deleteOrder"></order-details>
+    <order-edit v-else-if="mode === 'EDIT'" :details="orderDetails" @onSaveOrder="saveOrder"></order-edit>
     <div v-else>
         <base-button @click="addOrder()">Add</base-button>
         <ul>
@@ -16,12 +18,14 @@
 <script>
 import OrderBasicInfo from './OrderBasicInfo.vue';
 import OrderDetails from './OrderDetails.vue';
+import OrderEdit from './OrderEdit.vue';
 
 export default {
 
     components: {
         OrderBasicInfo,
-        OrderDetails
+        OrderDetails,
+        OrderEdit
     },
 
     data() {
@@ -80,20 +84,89 @@ export default {
                 });
         },
 
+
+        saveOrder(details) {
+            console.log("SAVE ORDER!!!");
+            this.showAlert = false;
+            fetch('/orders/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(details),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        this.showAlert = true;
+                        this.allertTitle = 'Success';
+                        this.allertMessage = 'Order was saved';
+                        this.mode = 'LIST';
+                        this.loadOrders();
+                    } else {
+                        throw new Error("Error with code: " + response.status + " , " + response.statusText);
+                    }
+                })
+                .catch((error) => {
+                    this.showAlert = true;
+                    this.allertTitle = 'An error occured';
+                    this.allertMessage = error.message;
+                });
+
+        },
+
         editOrder(details) {
-            if (details != null) {
-                // TODO:
-            }
+            this.orderDetails = details;
+            this.mode = 'EDIT';
         },
 
         deleteOrder(details) {
-            if (details != null) {
-                // TODO:
-            }
+            this.showAlert = false;
+            fetch('/orders/' + details.order.id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        this.showAlert = true;
+                        this.allertTitle = 'Success';
+                        this.allertMessage = 'Order was deleted';
+                        this.mode = 'LIST';
+                        this.loadOrders();
+                    } else {
+                        throw new Error("Error with code: " + response.status + " , " + response.statusText);
+                    }
+                })
+                .catch((error) => {
+                    this.showAlert = true;
+                    this.allertTitle = 'An error occured';
+                    this.allertMessage = error.message;
+                });
         },
 
         addOrder() {
-            // TODO:
+            this.orderDetails = {
+                order: {
+                    id: 0,
+                    name: "My order on " + new Date().toLocaleDateString(),
+                    creationDate: new Date(),
+                    deliveryDate: null,
+                    status: "SUBMITTED",
+                    paymentMethod: null,
+                    prize: {
+                        amount: 0,
+                        unit: "EURO"
+                    },
+                    deliveryFee: {
+                        amount: 0,
+                        unit: "EURO"
+                    }
+                },
+                addresses: [],
+                products: []
+            }
+            this.mode = 'EDIT';
         },
 
         closeAlert() {

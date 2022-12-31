@@ -120,7 +120,7 @@ export default {
                 .then((response) => {
                     if (response.ok) {
                         this.showAlert = true;
-                        this.allertMessage = 'Success';
+                        this.allertTitle = 'Success';
                         this.allertMessage = 'Product was deleted';
                         this.mode = 'LIST';
                         this.loadProducts();
