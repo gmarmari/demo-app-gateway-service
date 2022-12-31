@@ -33,6 +33,26 @@ body {
   margin: 0;
 }
 
+h2 {
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+}
+
+p {
+    margin: 0.5rem 0;
+}
+
+.flexSpaceBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 form {
     max-width: 40rem;
     border-radius: 12px;
