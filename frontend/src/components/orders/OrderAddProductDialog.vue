@@ -71,7 +71,9 @@ dialog {
     position: fixed;
     top: 20vh;
     left: 30%;
-    width: 40%;
+    width: 50%;
+    height: 50%;
+    overflow: scroll;
     background-color: white;
     box-shadow: 0 2px 8px rbg(0, 0, 0, 0.26);
     padding: 1rem;
